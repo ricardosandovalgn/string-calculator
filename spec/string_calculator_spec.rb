@@ -51,7 +51,7 @@ describe StringCalculator do
     expect { subject.add("-1,-2,-3") }.to raise_error(ArgumentError, "Multiple negative numbers have been detected: -1,-2,-3")
   end
 
-  it "returns the number of calls made to the add method" do # Why the called_count is not being modified, after multiple calls to the add method?
+  it "returns the number of calls made to the add method" do
     subject.add("//;\n1;2")
     expect(subject.called_count).to eq(1)
     subject.add("//;\n1;2")

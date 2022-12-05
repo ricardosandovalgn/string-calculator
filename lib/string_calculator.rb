@@ -16,8 +16,6 @@ class StringCalculator
     map_numbers(string)
     get_negatives
     @positives.sum
-    #@positives.sum
-
   end
 
   def increase_called_count
