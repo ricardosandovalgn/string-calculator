@@ -10,10 +10,10 @@ class StringCalculator
     @called_count = 0
   end
 
-  def add(string)
+  def add(input_string)
     increase_called_count
-    return 0 if string.strip.empty?
-    map_numbers(string)
+    return 0 if input_string.strip.empty?
+    map_numbers(input_string)
     get_negatives
     @positives.sum
   end
@@ -23,17 +23,32 @@ class StringCalculator
   end
 
   def get_negatives
-    raise ArgumentError.new("A negative number cannot be sent in the string.") if @negatives.count == 1
-    raise ArgumentError.new("Multiple negative numbers have been detected: #{@negatives.join(',')}") if @negatives.count > 1
+    raise ArgumentError, "A negative number cannot be sent in the string." if @negatives.count == 1
+    raise ArgumentError, "Multiple negative numbers have been detected: #{@negatives.join(',')}" if @negatives.count > 1
     @negatives
   end
 
   private
-  def map_numbers(string)
-    @numbers = string.split(REGEX).map do |number|
-      number.to_i < LIMIT ? number.to_i : 0
-    end.group_by { |n| n.negative? ? :negative : :positive }
+  # def map_numbers(string)
+  #   @numbers = string.split(REGEX).map do |number|
+  #     number.to_i < LIMIT ? number.to_i : 0
+  #   end.group_by { |n| n.negative? ? :negative : :positive }
+  #
+  #   @positives, @negatives = @numbers[:positive].to_a, @numbers[:negative].to_a
+  # end
 
-    @positives, @negatives = @numbers[:positive].to_a, @numbers[:negative].to_a
+  def numbers(string)
+    @numbers = numbers_in_string(string)
+  end
+
+  def numbers_in_string(string)
+    string.split(REGEX).map do |number|
+      number.to_i < LIMIT ? number.to_i : 0
+    end
+  end
+
+  def map_numbers(string)
+    grouped_numbers = numbers(string).group_by { |n| n.negative? ? :negative : :positive }
+    @positives, @negatives = grouped_numbers[:positive].to_a, grouped_numbers[:negative].to_a
   end
 end

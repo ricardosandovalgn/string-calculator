@@ -52,14 +52,11 @@ describe StringCalculator do
   end
 
   it "returns the number of calls made to the add method" do
-    subject.add("//;\n1;2")
-    expect(subject.called_count).to eq(1)
-    subject.add("//;\n1;2")
-    expect(subject.called_count).to eq(2)
+    expect { subject.add("1,2") }.to change(subject, :called_count).from(0).to(1)
   end
 
-  it "omits numbers bigger than a 1000" do
-    expect(subject.add("2,1001")).to eq(2)
+  it "omits bigger numbers than a 1000" do
+    expect(subject.add("2, 1001")).to eq(2)
   end
 
   it "returns the sum of the numbers no matter the length of the delimiters" do
