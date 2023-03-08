@@ -29,13 +29,6 @@ class StringCalculator
   end
 
   private
-  # def map_numbers(string)
-  #   @numbers = string.split(REGEX).map do |number|
-  #     number.to_i < LIMIT ? number.to_i : 0
-  #   end.group_by { |n| n.negative? ? :negative : :positive }
-  #
-  #   @positives, @negatives = @numbers[:positive].to_a, @numbers[:negative].to_a
-  # end
 
   def numbers(string)
     @numbers = numbers_in_string(string)
